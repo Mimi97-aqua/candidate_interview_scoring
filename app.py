@@ -1,12 +1,16 @@
 from flask import Flask
+from routes.api import interviews
 
-app = Flask(__name__)
 
-
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
-
+def create_app():
+    """
+    Application factory
+    :return:
+    """
+    app = Flask(__name__)
+    app.register_blueprint(interviews, url_prefix='/api')
+    return app
 
 if __name__ == '__main__':
-    app.run()
+    app = create_app()
+    app.run(debug=True, port=5000, host='0.0.0.0')
