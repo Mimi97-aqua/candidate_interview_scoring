@@ -1,3 +1,6 @@
+"""
+Application entry point
+"""
 from flask import Flask
 from routes.api import interviews
 

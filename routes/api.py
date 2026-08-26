@@ -1,8 +1,11 @@
+"""
+Interviews API
+- Create interview with scorinng pipeline initialized
+- Fetch interview(s)
+"""
 import datetime
-from logging import exception
 
 from flask import Blueprint, jsonify, request
-from werkzeug.exceptions import InternalServerError
 
 from helpers.helpers import *
 

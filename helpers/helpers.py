@@ -60,4 +60,3 @@ def compute_overall_score(
     :return:
     """
     return (communication_score + technical_score + problem_solving_score) / 3
-
