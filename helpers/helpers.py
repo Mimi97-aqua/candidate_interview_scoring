@@ -37,9 +37,9 @@ def generate_competency_score(competency: str):
 
     score = random.randrange(0, 6)
 
-    if (0 <= score <= 2):
+    if 0 <= score <= 2:
         feedback = 'Needs improvement'
-    elif (2 <= score <= 3):
+    elif 2 <= score <= 3:
         feedback = 'Good performance'
     else:
         feedback = 'Excellent clarity'
