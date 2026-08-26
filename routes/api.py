@@ -167,6 +167,8 @@ def get_interview():
         limit %s offset %s
     """
 
+    query = query1
+
     if interview_id:
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
@@ -182,19 +184,33 @@ def get_interview():
                         'message': 'Interview not found'
                     }), 400
 
-        query3 = """
+        query += """
             and i.id = %s
         """
-        query = query1 + query3
         params.append(interview_id)
 
-    query = query1 + query2
+    query += query2
     params.extend([per_page, offset])
+
+    # for pagination
+    count_query = query1
+    count_params = []
+    if interview_id:
+        count_query += """and i.id = %s"""
+        count_params.append(interview_id)
 
     with get_db_connection() as conn:
         with conn.cursor() as cursor:
             cursor.execute(query, tuple(params))
             interview_result = cursor.fetchall()
+
+            cursor.execute(
+                f"""
+                    select count(*)
+                    from ({count_query}) as sub
+                """
+            , tuple(count_params))
+            count_result = cursor.fetchone()
 
     return jsonify({
         'status': 'success',
@@ -220,6 +236,6 @@ def get_interview():
             'page': page,
             'per_page': per_page,
             'page_total': len(interview_result),
-            'total_pages': math.ceil(len(interview_result) / per_page),
+            'total_pages': math.ceil(count_result['count'] / per_page),
         }
     }), 200
