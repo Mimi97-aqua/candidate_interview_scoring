@@ -7,7 +7,7 @@ CREATE TABLE candidates (
     updated_at timestamp
 );
 
-CREATE TYPE interview_status AS (
+CREATE TYPE interview_status AS ENUM (
     'processing', -- still processing
     'completed', -- interview successfully processed
     'failed' -- there was an issue processing the interview
@@ -25,10 +25,10 @@ CREATE TABLE interviews (
 CREATE TABLE scores (
     id serial primary key,
     interview_id int references interviews(id) not null,
-    communication_score int not null check (0 <= communication_score <= 5),
-    problem_solving_score int not null check ( 0 <= problem_solving_score <= 5 ),
-    technical_score int not null (0 <= technical_score <= 5),
-    overall_score int not null (0 <= overall_score <= 5),
+    communication_score int not null check (communication_score between 0 and 5),
+    problem_solving_score int not null check (problem_solving_score between 0 and 5),
+    technical_score int not null check (technical_score between 0 and 5),
+    overall_score int not null check (overall_score between 0 and 5),
     communication_feedback text,
-    created_at timestamp default now()
+    graded_at timestamp default now()
 );
