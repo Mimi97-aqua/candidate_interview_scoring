@@ -5,6 +5,7 @@ import os
 import random
 
 import psycopg
+from psycopg.rows import dict_row
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,6 +24,7 @@ def get_db_connection():
         dbname=os.environ['DB_NAME'],
         user=os.environ['DB_USER'],
         password=os.environ['DB_PASSWORD'],
+        row_factory=dict_row
     )
 
 
