@@ -1,9 +1,29 @@
 """
 Helper functions for db setup and scoring logic
 """
+import os
 import random
 
+import psycopg
+from dotenv import load_dotenv
+
+load_dotenv()
+
 COMPETENCIES = ['communication', 'technical', 'problem_solving']
+
+
+def get_db_connection():
+    """
+    Establishes a connection to the Postgres database
+    :return: psycopg connection object
+    """
+    return psycopg.connect(
+        host=os.environ['DB_HOST'],
+        port=os.environ['DB_PORT'],
+        dbname=os.environ['DB_NAME'],
+        user=os.environ['DB_USER'],
+        password=os.environ['DB_PASSWORD'],
+    )
 
 
 def generate_competency_score(competency: str):
