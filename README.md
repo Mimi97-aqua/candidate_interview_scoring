@@ -1,5 +1,5 @@
 ## Candidate Interview Scoring
-Mercor AI live coding interview assessment. The task was to build a candidate interviewing scoring pipeline.
+Mercor AI live coding interview assessment. 
 
 ### Setup
 - Clone the repository
